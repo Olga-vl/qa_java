@@ -3,15 +3,16 @@ package com.unit;
 import com.example.Feline;
 import com.example.Lion;
 import org.junit.Assert;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LionTest {
@@ -26,15 +27,12 @@ public class LionTest {
         Assert.assertEquals(1,countOfKittens);
     }
 
-    @Rule
-    public ExpectedException exceptionRule = ExpectedException.none();
     @Test
-    public void doesHaveManeIsExceptionTest() throws Exception {
-
-        exceptionRule.expect(java.lang.Exception.class);
-        exceptionRule.expectMessage("Используйте допустимые значения пола животного - самец или самка");
-        Lion lion = new Lion("Samka", feline);
-
+    public void doesHaveManeIsExceptionTest() {
+        Exception exception = assertThrows(java.lang.Exception.class, () -> {
+            Lion lion = new Lion("Samka", feline);
+        });
+        assertEquals("Используйте допустимые значения пола животного - самец или самка", exception.getMessage());
     }
 
 

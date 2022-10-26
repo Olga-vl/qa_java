@@ -1,11 +1,9 @@
 package com.unit;
 
 import com.example.Animal;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class AnimalTest {
     @Test
@@ -15,15 +13,12 @@ public class AnimalTest {
         assertEquals("Существует несколько семейств: заячьи, беличьи, мышиные, кошачьи, псовые, медвежьи, куньи",family);
     }
 
-    @Rule
-    public ExpectedException exceptionRule = ExpectedException.none();
     @Test
-    public void getFoodIsExceptionTest() throws Exception {
-
-        exceptionRule.expect(java.lang.Exception.class);
-        exceptionRule.expectMessage("Неизвестный вид животного, используйте значение Травоядное или Хищник");
-        Animal animal = new Animal();
-        animal.getFood("Всеядное");
-
+    public void getFoodIsExceptionTest() {
+        Exception exception = assertThrows(java.lang.Exception.class, () -> {
+                    Animal animal = new Animal();
+                    animal.getFood("Всеядное");
+                });
+        assertEquals("Неизвестный вид животного, используйте значение Травоядное или Хищник", exception.getMessage());
     }
 }
